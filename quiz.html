@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS3 Hardware — Cambridge IGCSE Computer Science Study Guide — Interactive Quiz</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, 'Helvetica Neue', sans-serif;
+    background: #f5f7fa;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+  .header {
+    background: #1a3c5e;
+    color: white;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .header h1 { font-size: 24px; margin-bottom: 4px; }
+  .header p { opacity: 0.8; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+  .progress-bar {
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .progress-fill {
+    background: #2a5f8f;
+    height: 100%;
+    transition: width 0.3s ease;
+    border-radius: 8px;
+  }
+  .score-display {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+  .question-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: none;
+  }
+  .question-card.active { display: block; }
+  .question-card .q-number {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .question-card .q-type {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #1a3c5e;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .question-card .q-text {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .option:hover { border-color: #2a5f8f; background: #f0f4ff; }
+  .option.selected { border-color: #2a5f8f; background: #e8f0fe; }
+  .option.correct { border-color: #2d8a4e; background: #e8f5e9; }
+  .option.wrong { border-color: #c62828; background: #ffebee; }
+  .option:disabled { cursor: default; opacity: 0.85; }
+  .tf-btns { display: flex; gap: 12px; }
+  .tf-btns button {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s;
+  }
+  .tf-btns button:hover { border-color: #2a5f8f; }
+  .tf-btns button.correct { border-color: #2d8a4e; background: #e8f5e9; }
+  .tf-btns button.wrong { border-color: #c62828; background: #ffebee; }
+  .freeform-area {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+  }
+  .explanation {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-left: 3px solid #2a5f8f;
+    border-radius: 4px;
+    font-size: 14px;
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .nav-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  .nav-btns button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-next { background: #2a5f8f; color: white; }
+  .btn-next:hover { background: #1a3c5e; }
+  .btn-reveal { background: #e0e0e0; color: #333; }
+  .btn-reveal:hover { background: #d0d0d0; }
+  .results-card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: none;
+  }
+  .results-card h2 { font-size: 28px; margin-bottom: 8px; }
+  .results-card .score-big {
+    font-size: 64px;
+    font-weight: 700;
+    color: #2a5f8f;
+    margin: 16px 0;
+  }
+  .results-card .grade { font-size: 18px; margin-bottom: 24px; }
+  .btn-restart {
+    padding: 12px 32px;
+    background: #2a5f8f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>CS3 Hardware — Cambridge IGCSE Computer Science Study Guide</h1>
+  <p>Interactive Study Quiz</p>
+</div>
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="score-display" id="scoreDisplay">Question 1 of —</div>
+  <div id="questionsContainer"></div>
+  <div class="results-card" id="resultsCard">
+    <h2>Quiz Complete!</h2>
+    <div class="score-big" id="finalScore">0%</div>
+    <div class="grade" id="gradeText"></div>
+    <button class="btn-restart" onclick="restart()">Try Again</button>
+  </div>
+</div>
+<script>
+const DATA = {"title": "CS3 Hardware \u2014 Cambridge IGCSE Computer Science Study Guide", "mcq": [{"id": "term_0", "type": "mcq", "question": "What is the definition of <b>CPU (Central Processing Unit)</b>?", "options": ["A small, fast data storage area within the CPU that stores frequently used instructions and data", "An IP address that remains the same each time a device connects to a network", "The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing", "The component in a computer system that processes all instructions and data"], "correct": 3, "explanation": "The component in a computer system that processes all instructions and data"}, {"id": "term_1", "type": "mcq", "question": "What is the definition of <b>Microprocessor</b>?", "options": ["A unique hexadecimal address assigned by the manufacturer to identify a device on a network", "A register that stores the instruction currently being decoded or executed", "A single processing unit within a CPU containing all components needed for the fetch-decode-execute cycle", "A smaller version of a CPU, designed to perform a limited set of instructions in embedded systems"], "correct": 3, "explanation": "A smaller version of a CPU, designed to perform a limited set of instructions in embedded systems"}, {"id": "term_2", "type": "mcq", "question": "What is the definition of <b>Embedded system</b>?", "options": ["A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "A unique hexadecimal address assigned by the manufacturer to identify a device on a network", "A bus used by the CU to send signals to all components within the CPU to coordinate their operations", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)"], "correct": 0, "explanation": "A computer system built into a device to perform a specific task, such as a traffic light or washing machine"}, {"id": "term_3", "type": "mcq", "question": "What is the definition of <b>Fetch-decode-execute cycle</b>?", "options": ["The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing", "Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "A register that stores the instruction currently being decoded or executed", "A small, fast data storage area within the CPU that stores frequently used instructions and data"], "correct": 0, "explanation": "The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing"}, {"id": "term_4", "type": "mcq", "question": "What is the definition of <b>Von Neumann architecture</b>?", "options": ["Hardware in a device that allows it to connect to a network, either wired or wireless", "A common computer architecture where data and instructions are stored in the same memory and processed sequentially", "A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "A register that stores the instruction currently being decoded or executed"], "correct": 1, "explanation": "A common computer architecture where data and instructions are stored in the same memory and processed sequentially"}, {"id": "term_5", "type": "mcq", "question": "What is the definition of <b>Program counter (PC)</b>?", "options": ["A register that stores the address in RAM of the next instruction to be processed", "A single processing unit within a CPU containing all components needed for the fetch-decode-execute cycle", "A special register in the ALU that stores interim values during calculations", "An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4"], "correct": 0, "explanation": "A register that stores the address in RAM of the next instruction to be processed"}, {"id": "term_6", "type": "mcq", "question": "What is the definition of <b>Memory address register (MAR)</b>?", "options": ["A special register in the ALU that stores interim values during calculations", "A register that stores the address of the memory location to be accessed", "A bus used to carry memory addresses between the CPU and RAM", "A small, fast data storage area within the CPU that stores frequently used instructions and data"], "correct": 1, "explanation": "A register that stores the address of the memory location to be accessed"}, {"id": "term_7", "type": "mcq", "question": "What is the definition of <b>Memory data register (MDR)</b>?", "options": ["A unique hexadecimal address assigned by the manufacturer to identify a device on a network", "Non-volatile primary storage that stores boot-up programs like the BIOS; contents retained without power", "An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4", "A register that stores the data that has been fetched from or is to be written to memory"], "correct": 3, "explanation": "A register that stores the data that has been fetched from or is to be written to memory"}, {"id": "term_8", "type": "mcq", "question": "What is the definition of <b>Current instruction register (CIR)</b>?", "options": ["A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)", "A register that stores the instruction currently being decoded or executed", "The component of the CPU that performs all mathematical and logical calculations"], "correct": 2, "explanation": "A register that stores the instruction currently being decoded or executed"}, {"id": "term_9", "type": "mcq", "question": "What is the definition of <b>Control unit (CU)</b>?", "options": ["A common computer architecture where data and instructions are stored in the same memory and processed sequentially", "The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)", "The component of the CPU that directs the operation of the processor and decodes instructions", "The complete set of machine code commands that a CPU can understand and process"], "correct": 2, "explanation": "The component of the CPU that directs the operation of the processor and decodes instructions"}, {"id": "term_10", "type": "mcq", "question": "What is the definition of <b>Arithmetic logic unit (ALU)</b>?", "options": ["The component of the CPU that performs all mathematical and logical calculations", "Storage that uses magnetism and spinning platters to store data (e.g. hard disk drive)", "The component in a computer system that processes all instructions and data", "A small, fast data storage area within the CPU that stores frequently used instructions and data"], "correct": 0, "explanation": "The component of the CPU that performs all mathematical and logical calculations"}, {"id": "term_11", "type": "mcq", "question": "What is the definition of <b>Accumulator (ACC)</b>?", "options": ["Any device that allows data to be entered into a computer system", "An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4", "A bus used to carry data between the CPU and RAM", "A special register in the ALU that stores interim values during calculations"], "correct": 3, "explanation": "A special register in the ALU that stores interim values during calculations"}, {"id": "term_12", "type": "mcq", "question": "What is the definition of <b>Instruction set</b>?", "options": ["A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "The component of the CPU that directs the operation of the processor and decodes instructions", "The complete set of machine code commands that a CPU can understand and process"], "correct": 3, "explanation": "The complete set of machine code commands that a CPU can understand and process"}, {"id": "term_13", "type": "mcq", "question": "What is the definition of <b>Address bus</b>?", "options": ["The component in a computer system that processes all instructions and data", "A common computer architecture where data and instructions are stored in the same memory and processed sequentially", "A bus used to carry memory addresses between the CPU and RAM", "A unit of data transmitted across a network, containing the destination address"], "correct": 2, "explanation": "A bus used to carry memory addresses between the CPU and RAM"}, {"id": "term_14", "type": "mcq", "question": "What is the definition of <b>Data bus</b>?", "options": ["A smaller version of a CPU, designed to perform a limited set of instructions in embedded systems", "An IP addressing system using 32-bit addresses separated by full stops", "A unit of data transmitted across a network, containing the destination address", "A bus used to carry data between the CPU and RAM"], "correct": 3, "explanation": "A bus used to carry data between the CPU and RAM"}, {"id": "term_15", "type": "mcq", "question": "What is the definition of <b>Control bus</b>?", "options": ["Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing", "A special register in the ALU that stores interim values during calculations", "A bus used by the CU to send signals to all components within the CPU to coordinate their operations"], "correct": 3, "explanation": "A bus used by the CU to send signals to all components within the CPU to coordinate their operations"}, {"id": "term_16", "type": "mcq", "question": "What is the definition of <b>Core</b>?", "options": ["An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4", "A single processing unit within a CPU containing all components needed for the fetch-decode-execute cycle", "Storing data remotely on third-party servers accessed via the internet", "The physical means by which data is transmitted across a network (cables or wireless signals)"], "correct": 1, "explanation": "A single processing unit within a CPU containing all components needed for the fetch-decode-execute cycle"}, {"id": "term_17", "type": "mcq", "question": "What is the definition of <b>Clock speed</b>?", "options": ["An IP address that remains the same each time a device connects to a network", "The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)", "Any device that allows the result of data processing to be seen or heard", "A special register in the ALU that stores interim values during calculations"], "correct": 1, "explanation": "The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)"}, {"id": "term_18", "type": "mcq", "question": "What is the definition of <b>Cache</b>?", "options": ["A small, fast data storage area within the CPU that stores frequently used instructions and data", "An IP address that can change each time a device connects to a network", "A special register in the ALU that stores interim values during calculations", "Storage that loses its contents when power is removed (e.g. RAM)"], "correct": 0, "explanation": "A small, fast data storage area within the CPU that stores frequently used instructions and data"}, {"id": "term_19", "type": "mcq", "question": "What is the definition of <b>Input device</b>?", "options": ["An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4", "A unit of data transmitted across a network, containing the destination address", "Any device that allows data to be entered into a computer system", "A register that stores the address of the memory location to be accessed"], "correct": 2, "explanation": "Any device that allows data to be entered into a computer system"}, {"id": "term_20", "type": "mcq", "question": "What is the definition of <b>Output device</b>?", "options": ["A register that stores the address in RAM of the next instruction to be processed", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)", "A small, fast data storage area within the CPU that stores frequently used instructions and data", "Any device that allows the result of data processing to be seen or heard"], "correct": 3, "explanation": "Any device that allows the result of data processing to be seen or heard"}, {"id": "term_21", "type": "mcq", "question": "What is the definition of <b>Sensor</b>?", "options": ["The physical means by which data is transmitted across a network (cables or wireless signals)", "A type of input device used to capture analogue data from the surrounding environment", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)", "A small, fast data storage area within the CPU that stores frequently used instructions and data"], "correct": 1, "explanation": "A type of input device used to capture analogue data from the surrounding environment"}, {"id": "term_22", "type": "mcq", "question": "What is the definition of <b>RAM (Random Access Memory)</b>?", "options": ["A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "The component of the CPU that performs all mathematical and logical calculations", "Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing"], "correct": 2, "explanation": "Volatile primary storage that stores data and programs currently in use; contents lost when power is off"}, {"id": "term_23", "type": "mcq", "question": "What is the definition of <b>ROM (Read Only Memory)</b>?", "options": ["Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "The complete set of machine code commands that a CPU can understand and process", "Non-volatile primary storage that stores boot-up programs like the BIOS; contents retained without power", "A smaller version of a CPU, designed to perform a limited set of instructions in embedded systems"], "correct": 2, "explanation": "Non-volatile primary storage that stores boot-up programs like the BIOS; contents retained without power"}, {"id": "term_24", "type": "mcq", "question": "What is the definition of <b>Primary storage</b>?", "options": ["Storage that is directly accessed by the CPU, consisting of RAM and ROM", "Any device that allows data to be entered into a computer system", "A small, fast data storage area within the CPU that stores frequently used instructions and data", "Storing data remotely on third-party servers accessed via the internet"], "correct": 0, "explanation": "Storage that is directly accessed by the CPU, consisting of RAM and ROM"}, {"id": "term_25", "type": "mcq", "question": "What is the definition of <b>Secondary storage</b>?", "options": ["Non-volatile storage not directly accessed by the CPU; includes magnetic, optical, and solid-state types", "Storage that loses its contents when power is removed (e.g. RAM)", "A smaller version of a CPU, designed to perform a limited set of instructions in embedded systems", "Storage with no moving parts, using semiconductor chips and flash memory (e.g. SSD, USB flash drive)"], "correct": 0, "explanation": "Non-volatile storage not directly accessed by the CPU; includes magnetic, optical, and solid-state types"}, {"id": "term_26", "type": "mcq", "question": "What is the definition of <b>Magnetic storage</b>?", "options": ["Storage that uses magnetism and spinning platters to store data (e.g. hard disk drive)", "An IP address that can change each time a device connects to a network", "A type of input device used to capture analogue data from the surrounding environment", "A hardware device that reads data packets and forwards them to their correct destination on a network"], "correct": 0, "explanation": "Storage that uses magnetism and spinning platters to store data (e.g. hard disk drive)"}, {"id": "term_27", "type": "mcq", "question": "What is the definition of <b>Optical storage</b>?", "options": ["Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)", "Storage that uses magnetism and spinning platters to store data (e.g. hard disk drive)", "The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)"], "correct": 1, "explanation": "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)"}, {"id": "term_28", "type": "mcq", "question": "What is the definition of <b>Solid-state storage</b>?", "options": ["Any device that allows the result of data processing to be seen or heard", "A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "Storage with no moving parts, using semiconductor chips and flash memory (e.g. SSD, USB flash drive)", "The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)"], "correct": 2, "explanation": "Storage with no moving parts, using semiconductor chips and flash memory (e.g. SSD, USB flash drive)"}, {"id": "term_29", "type": "mcq", "question": "What is the definition of <b>Virtual memory</b>?", "options": ["A section of the hard drive partitioned to act as extra RAM when physical RAM becomes full", "The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing", "A hardware device that reads data packets and forwards them to their correct destination on a network", "An IP address that remains the same each time a device connects to a network"], "correct": 0, "explanation": "A section of the hard drive partitioned to act as extra RAM when physical RAM becomes full"}, {"id": "term_30", "type": "mcq", "question": "What is the definition of <b>Cloud storage</b>?", "options": ["An IP address that remains the same each time a device connects to a network", "Storage that is directly accessed by the CPU, consisting of RAM and ROM", "Storing data remotely on third-party servers accessed via the internet", "A bus used by the CU to send signals to all components within the CPU to coordinate their operations"], "correct": 2, "explanation": "Storing data remotely on third-party servers accessed via the internet"}, {"id": "term_31", "type": "mcq", "question": "What is the definition of <b>Network</b>?", "options": ["The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing", "Two or more devices connected together to share data and resources", "A register that stores the address of the memory location to be accessed", "Storage that is directly accessed by the CPU, consisting of RAM and ROM"], "correct": 1, "explanation": "Two or more devices connected together to share data and resources"}, {"id": "term_32", "type": "mcq", "question": "What is the definition of <b>Network interface card (NIC)</b>?", "options": ["Volatile primary storage that stores data and programs currently in use; contents lost when power is off", "A section of the hard drive partitioned to act as extra RAM when physical RAM becomes full", "Hardware in a device that allows it to connect to a network, either wired or wireless", "A hardware device that reads data packets and forwards them to their correct destination on a network"], "correct": 2, "explanation": "Hardware in a device that allows it to connect to a network, either wired or wireless"}, {"id": "term_33", "type": "mcq", "question": "What is the definition of <b>MAC address</b>?", "options": ["Two or more devices connected together to share data and resources", "An IP address that can change each time a device connects to a network", "The component of the CPU that directs the operation of the processor and decodes instructions", "A unique hexadecimal address assigned by the manufacturer to identify a device on a network"], "correct": 3, "explanation": "A unique hexadecimal address assigned by the manufacturer to identify a device on a network"}, {"id": "term_34", "type": "mcq", "question": "What is the definition of <b>Router</b>?", "options": ["The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)", "Hardware in a device that allows it to connect to a network, either wired or wireless", "A hardware device that reads data packets and forwards them to their correct destination on a network", "Non-volatile storage not directly accessed by the CPU; includes magnetic, optical, and solid-state types"], "correct": 2, "explanation": "A hardware device that reads data packets and forwards them to their correct destination on a network"}, {"id": "term_35", "type": "mcq", "question": "What is the definition of <b>IP address</b>?", "options": ["Storage that is directly accessed by the CPU, consisting of RAM and ROM", "An IP address that can change each time a device connects to a network", "A unique address assigned by the network to identify and locate a device", "The component in a computer system that processes all instructions and data"], "correct": 2, "explanation": "A unique address assigned by the network to identify and locate a device"}, {"id": "term_36", "type": "mcq", "question": "What is the definition of <b>IPv4</b>?", "options": ["A section of the hard drive partitioned to act as extra RAM when physical RAM becomes full", "A register that stores the instruction currently being decoded or executed", "A small, fast data storage area within the CPU that stores frequently used instructions and data", "An IP addressing system using 32-bit addresses separated by full stops"], "correct": 3, "explanation": "An IP addressing system using 32-bit addresses separated by full stops"}, {"id": "term_37", "type": "mcq", "question": "What is the definition of <b>IPv6</b>?", "options": ["Storage that retains its contents even when power is removed (e.g. ROM, secondary storage)", "Storage with no moving parts, using semiconductor chips and flash memory (e.g. SSD, USB flash drive)", "The component in a computer system that processes all instructions and data", "An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4"], "correct": 3, "explanation": "An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4"}, {"id": "term_38", "type": "mcq", "question": "What is the definition of <b>Static IP address</b>?", "options": ["A computer system built into a device to perform a specific task, such as a traffic light or washing machine", "A bus used by the CU to send signals to all components within the CPU to coordinate their operations", "Any device that allows data to be entered into a computer system", "An IP address that remains the same each time a device connects to a network"], "correct": 3, "explanation": "An IP address that remains the same each time a device connects to a network"}, {"id": "term_39", "type": "mcq", "question": "What is the definition of <b>Dynamic IP address</b>?", "options": ["A special register in the ALU that stores interim values during calculations", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)", "An IP address that can change each time a device connects to a network", "An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4"], "correct": 2, "explanation": "An IP address that can change each time a device connects to a network"}, {"id": "term_40", "type": "mcq", "question": "What is the definition of <b>Volatile storage</b>?", "options": ["Storage that loses its contents when power is removed (e.g. RAM)", "Any device that allows data to be entered into a computer system", "The complete set of machine code commands that a CPU can understand and process", "Non-volatile primary storage that stores boot-up programs like the BIOS; contents retained without power"], "correct": 0, "explanation": "Storage that loses its contents when power is removed (e.g. RAM)"}, {"id": "term_41", "type": "mcq", "question": "What is the definition of <b>Non-volatile storage</b>?", "options": ["A register that stores the data that has been fetched from or is to be written to memory", "Storage that retains its contents even when power is removed (e.g. ROM, secondary storage)", "An IP address that can change each time a device connects to a network", "Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)"], "correct": 1, "explanation": "Storage that retains its contents even when power is removed (e.g. ROM, secondary storage)"}, {"id": "term_42", "type": "mcq", "question": "What is the definition of <b>Data packet</b>?", "options": ["The physical means by which data is transmitted across a network (cables or wireless signals)", "A unit of data transmitted across a network, containing the destination address", "Hardware in a device that allows it to connect to a network, either wired or wireless", "The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)"], "correct": 1, "explanation": "A unit of data transmitted across a network, containing the destination address"}, {"id": "term_43", "type": "mcq", "question": "What is the definition of <b>Transmission media</b>?", "options": ["Storage that loses its contents when power is removed (e.g. RAM)", "A register that stores the address in RAM of the next instruction to be processed", "The physical means by which data is transmitted across a network (cables or wireless signals)", "The component in a computer system that processes all instructions and data"], "correct": 2, "explanation": "The physical means by which data is transmitted across a network (cables or wireless signals)"}], "freeform": [{"id": "qa_0", "type": "freeform", "question": "Where is data stored before it is fetched into the CPU?", "answer": "Data is stored in RAM (random access memory) before it is fetched into the CPU.", "marks": null}, {"id": "qa_1", "type": "freeform", "question": "Which component in the CPU is responsible for making sure the fetch-decode-execute cycle is performed correctly?", "answer": "The control unit (CU) is responsible for coordinating the fetch-decode-execute cycle by sending signals via the control bus to all components within the CPU.", "marks": null}, {"id": "qa_2", "type": "freeform", "question": "What is the role of a bus in a computer system?", "answer": "A bus is a communication pathway that carries data, addresses, or control signals between components within the CPU and between the CPU and memory. The three main buses are the address bus, data bus, and control bus.", "marks": null}, {"id": "qa_3", "type": "freeform", "question": "Why does the ALU need the accumulator (ACC)? What would happen without it?", "answer": "The ALU needs the accumulator to store interim values that are created during calculations. Without it, the ALU would not be able to store partial results while performing multi-step calculations, and it would need to constantly access RAM, which would significantly slow down processing.", "marks": null}, {"id": "qa_4", "type": "freeform", "question": "Which CPU can process more instructions at the same time: a quad core or a dual core?", "answer": "A quad-core CPU can process more instructions at the same time because it has four cores, each capable of performing a separate fetch-decode-execute cycle simultaneously, compared to only two cores in a dual-core processor.", "marks": null}, {"id": "qa_5", "type": "freeform", "question": "How many instructions per second can a dual-core 2.4 GHz CPU process?", "answer": "A dual-core 2.4 GHz CPU can process 4.8 billion instructions per second (2.4 billion per core x 2 cores).", "marks": null}, {"id": "qa_6", "type": "freeform", "question": "Explain why a larger cache can improve the performance of a CPU.", "answer": "A larger cache can store more frequently used instructions and data within the CPU. This means the CPU does not need to fetch data from the slower RAM as often, reducing access times and improving overall processing speed.", "marks": null}, {"id": "qa_7", "type": "freeform", "question": "Is a sensor an example of an input device or an output device? Explain your answer.", "answer": "A sensor is an example of an input device because it captures data from the surrounding environment and sends it into the computer system for processing. It inputs analogue data such as temperature, light levels, or pressure readings.", "marks": null}, {"id": "qa_8", "type": "freeform", "question": "State two differences between RAM and ROM.", "answer": "(1) RAM is volatile (loses contents when power is off) while ROM is non-volatile (retains contents without power). (2) RAM stores data and programs currently in use that constantly change, while ROM stores fixed boot-up programs like the BIOS that do not normally change.", "marks": null}, {"id": "qa_9", "type": "freeform", "question": "Identify the three main types of secondary storage and give one example of each.", "answer": "(1) Magnetic storage \u2014 e.g. hard disk drive (HDD). (2) Optical storage \u2014 e.g. CD, DVD, or Blu-ray. (3) Solid-state storage \u2014 e.g. solid state drive (SSD) or USB flash memory drive.", "marks": null}, {"id": "qa_10", "type": "freeform", "question": "Identify the name of the component where an instruction is stored immediately before it is fetched into the CPU.", "answer": "The instruction is stored in RAM (random access memory) immediately before it is fetched into the CPU.", "marks": null}, {"id": "qa_11", "type": "freeform", "question": "Identify the name of the component that stores the address of the next instruction that will be processed.", "answer": "The program counter (PC) stores the address of the next instruction that will be processed.", "marks": null}, {"id": "qa_12", "type": "freeform", "question": "Give the most appropriate sensor for each scenario: (a) monitoring pollution in a river, (b) counting competitors finishing a race, (c) detecting a person approaching an automatic door.", "answer": "(a) A pH sensor \u2014 to measure the pH level of the water and detect pollution. (b) A pressure sensor or infra-red sensor \u2014 to detect when a competitor crosses the finish line. (c) A proximity sensor or infra-red sensor \u2014 to detect when a person is approaching the door and trigger it to open.", "marks": null}], "truefalse": [{"id": "tf_0", "type": "truefalse", "statement": "Barcode scanner \u2014 Scans barcodes to read the data stored within them (e.g. supermarket pricing)", "correct": true, "explanation": "Barcode scanner \u2014 Scans barcodes to read the data stored within them (e.g. supermarket pricing)"}, {"id": "tf_1", "type": "truefalse", "statement": "Digital camera \u2014 Captures images and video as digital data", "correct": true, "explanation": "Digital camera \u2014 Captures images and video as digital data"}, {"id": "tf_2", "type": "truefalse", "statement": "Keyboard \u2014 Allows text and commands to be entered as character data", "correct": true, "explanation": "Keyboard \u2014 Allows text and commands to be entered as character data"}, {"id": "tf_3", "type": "truefalse", "statement": "Microphone \u2014 Captures sound as audio data", "correct": true, "explanation": "Microphone \u2014 Captures sound as audio data"}, {"id": "tf_4", "type": "truefalse", "statement": "Optical mouse \u2014 Detects movement and button clicks for cursor control", "correct": true, "explanation": "Optical mouse \u2014 Detects movement and button clicks for cursor control"}, {"id": "tf_5", "type": "truefalse", "statement": "QR code scanner \u2014 Reads QR codes to obtain embedded data", "correct": true, "explanation": "QR code scanner \u2014 Reads QR codes to obtain embedded data"}, {"id": "tf_6", "type": "truefalse", "statement": "Scanner (2D and 3D) \u2014 Captures printed documents or physical objects as digital data", "correct": true, "explanation": "Scanner (2D and 3D) \u2014 Captures printed documents or physical objects as digital data"}, {"id": "tf_7", "type": "truefalse", "statement": "Touch screen \u2014 Allows direct interaction through screen contact; three types: resistive, capacitive, and infra-red", "correct": true, "explanation": "Touch screen \u2014 Allows direct interaction through screen contact; three types: resistive, capacitive, and infra-red"}, {"id": "tf_8", "type": "truefalse", "statement": "Actuator \u2014 Outputs an action, often movement, to control another device (e.g. turning a light on/off in an automated system)", "correct": true, "explanation": "Actuator \u2014 Outputs an action, often movement, to control another device (e.g. turning a light on/off in an automated system)"}, {"id": "tf_9", "type": "truefalse", "statement": "Digital light processing (DLP) projector \u2014 Projects images onto a surface using light", "correct": true, "explanation": "Digital light processing (DLP) projector \u2014 Projects images onto a surface using light"}, {"id": "tf_10", "type": "truefalse", "statement": "Inkjet printer \u2014 Produces printed output by spraying ink onto paper", "correct": true, "explanation": "Inkjet printer \u2014 Produces printed output by spraying ink onto paper"}, {"id": "tf_11", "type": "truefalse", "statement": "Laser printer \u2014 Produces printed output using laser and toner technology", "correct": true, "explanation": "Laser printer \u2014 Produces printed output using laser and toner technology"}, {"id": "tf_12", "type": "truefalse", "statement": "Light emitting diode (LED) screen \u2014 Displays visual output using LED technology", "correct": true, "explanation": "Light emitting diode (LED) screen \u2014 Displays visual output using LED technology"}, {"id": "tf_13", "type": "truefalse", "statement": "Liquid crystal display (LCD) projector \u2014 Projects images using LCD technology", "correct": true, "explanation": "Liquid crystal display (LCD) projector \u2014 Projects images using LCD technology"}, {"id": "tf_14", "type": "truefalse", "statement": "Liquid crystal display (LCD) screen \u2014 Displays visual output using LCD technology", "correct": true, "explanation": "Liquid crystal display (LCD) screen \u2014 Displays visual output using LCD technology"}]};
+let allQ = [];
+let idx = 0;
+let score = 0;
+let answered = 0;
+
+function init() {
+  allQ = [...(DATA.mcq||[]), ...(DATA.truefalse||[]), ...(DATA.freeform||[])];
+  if (!allQ.length) { document.getElementById('scoreDisplay').textContent = 'No questions available.'; return; }
+  idx = 0; score = 0; answered = 0;
+  renderAll();
+  showQuestion(0);
+}
+
+function renderAll() {
+  const c = document.getElementById('questionsContainer');
+  c.innerHTML = '';
+  allQ.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'q_' + i;
+
+    let typeLabel = q.type === 'mcq' ? 'Multiple Choice' : q.type === 'truefalse' ? 'True / False' : 'Written Answer';
+    let inner = `<div class="q-number">Question ${i+1} of ${allQ.length}</div>`;
+    inner += `<span class="q-type">${typeLabel}</span>`;
+
+    if (q.type === 'mcq') {
+      inner += `<div class="q-text">${q.question}</div>`;
+      q.options.forEach((o, oi) => {
+        inner += `<button class="option" data-qi="${i}" data-oi="${oi}" onclick="answerMCQ(${i},${oi})">${o}</button>`;
+      });
+      inner += `<div class="explanation" id="expl_${i}">${q.explanation||''}</div>`;
+    } else if (q.type === 'truefalse') {
+      inner += `<div class="q-text">${q.statement}</div>`;
+      inner += `<div class="tf-btns"><button data-qi="${i}" data-val="true" onclick="answerTF(${i},true)">True</button>`;
+      inner += `<button data-qi="${i}" data-val="false" onclick="answerTF(${i},false)">False</button></div>`;
+      inner += `<div class="explanation" id="expl_${i}">Correct statement: ${q.explanation||''}</div>`;
+    } else {
+      inner += `<div class="q-text">${q.question}</div>`;
+      inner += `<textarea class="freeform-area" id="ans_${i}" placeholder="Type your answer..."></textarea>`;
+      inner += `<div class="explanation" id="expl_${i}"><b>Model answer:</b> ${q.answer||''}</div>`;
+    }
+
+    inner += `<div class="nav-btns">`;
+    if (q.type === 'freeform') inner += `<button class="btn-reveal" onclick="revealFreeform(${i})">Show Answer</button>`;
+    else inner += `<span></span>`;
+    inner += `<button class="btn-next" id="next_${i}" onclick="nextQ()">${i===allQ.length-1?'Finish':'Next →'}</button>`;
+    inner += `</div>`;
+
+    card.innerHTML = inner;
+    c.appendChild(card);
+  });
+}
+
+function showQuestion(n) {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  const card = document.getElementById('q_' + n);
+  if (card) card.classList.add('active');
+  document.getElementById('progressFill').style.width = ((n+1)/allQ.length*100) + '%';
+  document.getElementById('scoreDisplay').textContent = `Question ${n+1} of ${allQ.length} · Score: ${score}/${answered}`;
+}
+
+function answerMCQ(qi, oi) {
+  const q = allQ[qi];
+  const btns = document.querySelectorAll(`button[data-qi="${qi}"]`);
+  btns.forEach(b => { b.disabled = true; b.classList.remove('selected'); });
+  btns[oi].classList.add('selected');
+  if (oi === q.correct) { btns[oi].classList.add('correct'); score++; }
+  else { btns[oi].classList.add('wrong'); btns[q.correct].classList.add('correct'); }
+  answered++;
+  document.getElementById('expl_' + qi).classList.add('show');
+  document.getElementById('scoreDisplay').textContent = `Question ${qi+1} of ${allQ.length} · Score: ${score}/${answered}`;
+}
+
+function answerTF(qi, val) {
+  const q = allQ[qi];
+  const btns = document.querySelectorAll(`button[data-qi="${qi}"]`);
+  btns.forEach(b => b.disabled = true);
+  const correct = val === q.correct;
+  btns.forEach(b => {
+    if (String(b.dataset.val) === String(q.correct)) b.classList.add('correct');
+    if (b.dataset.val === String(val) && !correct) b.classList.add('wrong');
+  });
+  if (correct) score++;
+  answered++;
+  document.getElementById('expl_' + qi).classList.add('show');
+  document.getElementById('scoreDisplay').textContent = `Question ${qi+1} of ${allQ.length} · Score: ${score}/${answered}`;
+}
+
+function revealFreeform(qi) {
+  document.getElementById('expl_' + qi).classList.add('show');
+  answered++;
+  document.getElementById('scoreDisplay').textContent = `Question ${qi+1} of ${allQ.length} · Score: ${score}/${answered}`;
+}
+
+function nextQ() {
+  idx++;
+  if (idx >= allQ.length) { showResults(); return; }
+  showQuestion(idx);
+}
+
+function showResults() {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  const pct = answered > 0 ? Math.round(score/answered*100) : 0;
+  document.getElementById('finalScore').textContent = pct + '%';
+  let grade = pct >= 90 ? 'Outstanding!' : pct >= 70 ? 'Great work!' : pct >= 50 ? 'Good effort — keep studying!' : 'Review the material and try again.';
+  document.getElementById('gradeText').textContent = grade + ` (${score}/${answered} correct)`;
+  document.getElementById('resultsCard').style.display = 'block';
+  document.getElementById('progressFill').style.width = '100%';
+  // Save to localStorage for dashboard
+  try {
+    const sessions = JSON.parse(localStorage.getItem('sf_quiz_sessions') || '[]');
+    sessions.push({ date: new Date().toISOString(), score, total: answered, pct });
+    localStorage.setItem('sf_quiz_sessions', JSON.stringify(sessions));
+  } catch(e) {}
+}
+
+function restart() {
+  document.getElementById('resultsCard').style.display = 'none';
+  init();
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS3 Hardware — Cambridge IGCSE Computer Science Study Guide — Exam Simulator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f5f7fa; color: #1a1a1a; line-height: 1.6; }
+  .header { background: #1a3c5e; color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; }
+  .header h1 { font-size: 22px; }
+  .timer { font-size: 28px; font-weight: 700; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .timer.warning { color: #ff9800; }
+  .timer.danger { color: #ff4444; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: 0.5; } }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+  .exam-info {
+    background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center;
+  }
+  .exam-info .stat { display: inline-block; margin: 0 16px; }
+  .exam-info .stat-val { font-size: 24px; font-weight: 700; color: #2a5f8f; }
+  .exam-info .stat-label { font-size: 12px; color: #888; }
+  .q-card {
+    background: white; border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .q-card .q-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+  .q-card .q-num { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+  .q-card .q-marks { font-size: 12px; color: #2a5f8f; font-weight: 600; }
+  .q-card .q-text { font-size: 16px; margin-bottom: 12px; }
+  .q-card textarea {
+    width: 100%; min-height: 100px; padding: 12px; border: 2px solid #e0e0e0;
+    border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical;
+  }
+  .q-card textarea:focus { border-color: #2a5f8f; outline: none; }
+  .answer-reveal {
+    margin-top: 12px; padding: 12px 16px; background: #f0faf0;
+    border-left: 3px solid #2d8a4e; border-radius: 4px; font-size: 14px;
+    display: none; white-space: pre-wrap;
+  }
+  .answer-reveal.show { display: block; }
+  .controls { text-align: center; margin: 24px 0; }
+  .controls button {
+    padding: 12px 32px; border: none; border-radius: 8px; font-size: 16px;
+    font-weight: 600; cursor: pointer; margin: 0 8px;
+  }
+  .btn-start { background: #2a5f8f; color: white; }
+  .btn-start:hover { background: #1a3c5e; }
+  .btn-submit { background: #2d8a4e; color: white; }
+  .btn-submit:hover { background: #1d6a3e; }
+  .btn-show { background: #e0e0e0; color: #333; }
+  .btn-show:hover { background: #d0d0d0; }
+  .hidden { display: none; }
+  .results {
+    background: white; border-radius: 12px; padding: 32px; text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .results h2 { font-size: 28px; margin-bottom: 16px; }
+  .results .time-taken { font-size: 18px; color: #555; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>CS3 Hardware — Cambridge IGCSE Computer Science Study Guide — Exam Simulator</h1>
+  <div class="timer" id="timer">--:--</div>
+</div>
+<div class="container">
+  <div class="exam-info" id="examInfo">
+    <div class="stat"><div class="stat-val" id="totalQ">-</div><div class="stat-label">Questions</div></div>
+    <div class="stat"><div class="stat-val" id="totalM">-</div><div class="stat-label">Total Marks</div></div>
+    <div class="stat"><div class="stat-val" id="timeLimit">-</div><div class="stat-label">Minutes</div></div>
+    <div style="margin-top:16px;">
+      <button class="btn-start" id="btnStart" onclick="startExam()">Start Exam</button>
+    </div>
+  </div>
+  <div id="questionsArea" class="hidden"></div>
+  <div id="submitArea" class="hidden controls">
+    <button class="btn-submit" onclick="submitExam()">Submit &amp; View Answers</button>
+  </div>
+  <div id="resultsArea" class="hidden"></div>
+</div>
+<script>
+const EXAM = {"title": "CS3 Hardware \u2014 Cambridge IGCSE Computer Science Study Guide", "timeMinutes": 45, "questions": [{"id": "Question CS3.01", "question": "Where is data stored before it is fetched into the CPU?", "answer": "Data is stored in RAM (random access memory) before it is fetched into the CPU.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.02", "question": "Which component in the CPU is responsible for making sure the fetch-decode-execute cycle is performed correctly?", "answer": "The control unit (CU) is responsible for coordinating the fetch-decode-execute cycle by sending signals via the control bus to all components within the CPU.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.03", "question": "What is the role of a bus in a computer system?", "answer": "A bus is a communication pathway that carries data, addresses, or control signals between components within the CPU and between the CPU and memory. The three main buses are the address bus, data bus, and control bus.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.04", "question": "Why does the ALU need the accumulator (ACC)? What would happen without it?", "answer": "The ALU needs the accumulator to store interim values that are created during calculations. Without it, the ALU would not be able to store partial results while performing multi-step calculations, and it would need to constantly access RAM, which would significantly slow down processing.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.05", "question": "Describe the steps involved in the fetch stage of the fetch-decode-execute cycle.", "answer": "(1) The program counter (PC) holds the address of the next instruction. (2) This address is copied to the memory address register (MAR) via the address bus. (3) The MAR sends the address to RAM using the address bus. (4) The instruction at that RAM location is sent to the memory data register (MDR) via the data bus. (5) The MDR forwards the instruction to the current instruction register (CIR). (6) The PC is incremented to point to the next instruction.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.06", "question": "Which CPU can process more instructions at the same time: a quad core or a dual core?", "answer": "A quad-core CPU can process more instructions at the same time because it has four cores, each capable of performing a separate fetch-decode-execute cycle simultaneously, compared to only two cores in a dual-core processor.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.07", "question": "How many instructions per second can a dual-core 2.4 GHz CPU process?", "answer": "A dual-core 2.4 GHz CPU can process 4.8 billion instructions per second (2.4 billion per core x 2 cores).", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.08", "question": "Explain why a larger cache can improve the performance of a CPU.", "answer": "A larger cache can store more frequently used instructions and data within the CPU. This means the CPU does not need to fetch data from the slower RAM as often, reducing access times and improving overall processing speed.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.09", "question": "Is a sensor an example of an input device or an output device? Explain your answer.", "answer": "A sensor is an example of an input device because it captures data from the surrounding environment and sends it into the computer system for processing. It inputs analogue data such as temperature, light levels, or pressure readings.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.10", "question": "Name five different types of sensor and give an application for each.", "answer": "(1) Temperature sensor \u2014 used in air conditioning systems to maintain room temperature. (2) Light sensor \u2014 used in streetlights to automatically turn on when it gets dark. (3) Pressure sensor \u2014 used in security systems to detect opened windows or doors. (4) Humidity sensor \u2014 used in greenhouses to monitor moisture levels for optimal crop growth. (5) Infra-red sensor \u2014 used in security systems to detect intruders by capturing their infra-red radiation.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.11", "question": "State two differences between RAM and ROM.", "answer": "(1) RAM is volatile (loses contents when power is off) while ROM is non-volatile (retains contents without power). (2) RAM stores data and programs currently in use that constantly change, while ROM stores fixed boot-up programs like the BIOS that do not normally change.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.12", "question": "Identify the three main types of secondary storage and give one example of each.", "answer": "(1) Magnetic storage \u2014 e.g. hard disk drive (HDD). (2) Optical storage \u2014 e.g. CD, DVD, or Blu-ray. (3) Solid-state storage \u2014 e.g. solid state drive (SSD) or USB flash memory drive.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.13", "question": "Describe how data is stored on optical storage.", "answer": "Optical storage uses lasers to read and write data on a circular disk. To write data, a laser burns pits into the surface of the disk. The surface between each pit is called a land. These pits and lands are organised in a spiral track starting from the centre of the disk. A laser reads the pattern of pits and lands to retrieve the stored data. The disk spins and a read/write head moves across the surface.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.14", "question": "Explain how virtual memory works and why it is needed.", "answer": "Virtual memory is created by partitioning a section of the hard drive to act as extra RAM. When RAM becomes full, the computer transfers pages of data that are not immediately needed to the virtual memory. When these pages are required again, they are sent back to RAM for processing. Virtual memory is needed because without it, if RAM became full, the computer could crash as it would be unable to complete the tasks it is working on.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.15", "question": "Give one advantage and two disadvantages of storing data in cloud storage rather than local storage.", "answer": "Advantage: You do not have to pay for the hardware to store the data, reducing costs for businesses. Disadvantages: (1) You are relying on a third party to keep your data safe, and if they fail to do this, your data may be at risk. (2) You need an internet connection to access your data; if the connection fails or is slow, you will not be able to access your data.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.16", "question": "Identify the name of the component where an instruction is stored immediately before it is fetched into the CPU.", "answer": "The instruction is stored in RAM (random access memory) immediately before it is fetched into the CPU.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.17", "question": "Identify the name of the component that stores the address of the next instruction that will be processed.", "answer": "The program counter (PC) stores the address of the next instruction that will be processed.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.18", "question": "Describe what happens at the decode stage of the fetch-decode-execute cycle.", "answer": "During the decode stage, the control unit (CU) receives the instruction from the current instruction register (CIR). The CU then decodes the instruction using the instruction set \u2014 a set of all the machine code commands that the CPU can understand. This determines what actions need to be performed to execute the instruction. Once decoded, the instruction is ready to be executed.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.19", "question": "A student replaces a 2 GHz single-core processor with a 3.4 GHz dual-core processor. Explain why the performance of the new CPU would be better.", "answer": "The new CPU has a higher clock speed (3.4 GHz vs 2 GHz), meaning each core can process more instructions per second. Additionally, the new CPU has two cores instead of one, so it can perform two fetch-decode-execute cycles simultaneously. This means it can multitask and process more instructions overall, significantly improving performance.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.20", "question": "What is the difference between a MAC address and an IP address?", "answer": "A MAC address is assigned by the manufacturer of the network interface card and is permanent \u2014 it never normally changes. An IP address is assigned by the network (usually the router) and can change. MAC addresses are used to identify devices on a local network, while IP addresses are used to identify and locate devices across networks and the internet. MAC addresses are represented in hexadecimal (e.g. 34:4D:EA:89:75:B2) while IP addresses use decimal (IPv4) or hexadecimal (IPv6) notation.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.21", "question": "Describe the structure of an IPv4 address and explain why IPv6 was created.", "answer": "An IPv4 address uses 32 bits to create a numerical address separated by full stops (e.g. 12.244.233.165). IPv6 was created because as more and more devices started connecting to networks, the number of available IPv4 addresses was rapidly declining. Since each IP address must be unique, IPv6 uses 128 bits and can contain hexadecimal characters, creating vastly more possible addresses to accommodate the growing number of devices worldwide.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.22", "question": "Give the most appropriate sensor for each scenario: (a) monitoring pollution in a river, (b) counting competitors finishing a race, (c) detecting a person approaching an automatic door.", "answer": "(a) A pH sensor \u2014 to measure the pH level of the water and detect pollution. (b) A pressure sensor or infra-red sensor \u2014 to detect when a competitor crosses the finish line. (c) A proximity sensor or infra-red sensor \u2014 to detect when a person is approaching the door and trigger it to open.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.23", "question": "Explain the difference between primary storage and secondary storage.", "answer": "Primary storage is directly accessed by the CPU and includes RAM (volatile) and ROM (non-volatile). Secondary storage is not directly accessed by the CPU \u2014 data must be transferred to primary storage first before it can be processed. Secondary storage is always non-volatile and includes magnetic, optical, and solid-state storage types. Primary storage is generally faster but smaller in capacity, while secondary storage is slower but offers larger storage capacity.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.24", "question": "Describe how data is stored on a hard disk drive (magnetic storage).", "answer": "A hard disk drive uses circular plates called platters that spin. The platters are separated into tracks and sectors. A read/write head moves across the platters to read or write data. An electromagnet magnetises dots on each platter to store data \u2014 if a dot is magnetised it stores binary value 1, and if it is demagnetised it stores binary value 0. Each platter has billions of these magnetised dots.", "marks": 2, "hasImage": false, "imagePath": null}, {"id": "Question CS3.25", "question": "Explain why solid-state storage was developed and how it differs from magnetic storage.", "answer": "Solid-state storage was developed because hard disk drives have moving parts, making them vulnerable to wear and damage if dropped \u2014 a significant disadvantage for portable devices. Solid-state storage has no moving parts, making it more durable and reliable. It uses semiconductor chips and flash memory with cells and transistors arranged in a grid, whereas magnetic storage uses spinning platters and electromagnetic read/write heads. Solid-state storage is generally faster and more resistant to physical damage than magnetic storage.\n\n---\n\n## Key Formulas and Concepts\n\n1. Clock speed is measured in hertz (Hz); 1 GHz = 1 billion instructions per second per core\n2. Total processing power = clock speed x number of cores (e.g. dual-core 2.4 GHz = 4.8 billion instructions per second)\n3. IPv4 use", "marks": 2, "hasImage": false, "imagePath": null}], "totalMarks": 50};
+let timerInterval = null;
+let secondsLeft = 0;
+let startTime = null;
+
+document.getElementById('totalQ').textContent = EXAM.questions.length;
+document.getElementById('totalM').textContent = EXAM.totalMarks;
+document.getElementById('timeLimit').textContent = EXAM.timeMinutes;
+
+function startExam() {
+  document.getElementById('btnStart').classList.add('hidden');
+  document.getElementById('questionsArea').classList.remove('hidden');
+  document.getElementById('submitArea').classList.remove('hidden');
+  secondsLeft = EXAM.timeMinutes * 60;
+  startTime = Date.now();
+  renderQuestions();
+  timerInterval = setInterval(tick, 1000);
+  tick();
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'timer' + (secondsLeft < 300 ? (secondsLeft < 60 ? ' danger' : ' warning') : '');
+  if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+}
+
+function renderQuestions() {
+  const area = document.getElementById('questionsArea');
+  area.innerHTML = '';
+  EXAM.questions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Question ${i+1} — ${q.id}</span>
+        <span class="q-marks">[${q.marks} marks]</span>
+      </div>
+      <div class="q-text">${q.question}</div>
+      <textarea id="ans_${i}" placeholder="Write your answer here..."></textarea>
+      <div class="answer-reveal" id="reveal_${i}"><b>Model Answer:</b><br>${q.answer}</div>
+    `;
+    area.appendChild(div);
+  });
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
+  const m = Math.floor(elapsed / 60);
+  const s = elapsed % 60;
+
+  document.getElementById('submitArea').classList.add('hidden');
+  document.querySelectorAll('.answer-reveal').forEach(el => el.classList.add('show'));
+  document.querySelectorAll('textarea').forEach(el => el.disabled = true);
+  document.getElementById('timer').textContent = 'DONE';
+  document.getElementById('timer').className = 'timer';
+
+  const results = document.getElementById('resultsArea');
+  results.classList.remove('hidden');
+  results.innerHTML = `
+    <div class="results">
+      <h2>Exam Complete</h2>
+      <div class="time-taken">Time taken: ${m}m ${s}s</div>
+      <p style="margin-top:12px;color:#555;">Model answers shown below each question. Review your responses.</p>
+    </div>
+  `;
+
+  try {
+    const sessions = JSON.parse(localStorage.getItem('sf_exam_sessions') || '[]');
+    sessions.push({ date: new Date().toISOString(), questions: EXAM.questions.length, totalMarks: EXAM.totalMarks, timeSec: elapsed });
+    localStorage.setItem('sf_exam_sessions', JSON.stringify(sessions));
+  } catch(e) {}
+}
+</script>
+</body>
+</html>

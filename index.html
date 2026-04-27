@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>StudyForge Study Guide</title>
+<meta charset="UTF-8">
+<style>
+  @page {
+    size: A4;
+    margin: 1.5cm 1.8cm;
+  }
+  body {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.4;
+    color: #000000;
+  }
+  h1 {
+    font-size: 20pt;
+    color: #000000;
+    border-bottom: 2px solid #1a3c5e;
+    padding-bottom: 4px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 15pt;
+    color: #000000;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 3px;
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+  h3 {
+    font-size: 12pt;
+    color: #000000;
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+  h4 {
+    font-size: 11pt;
+    color: #000000;
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+  p { margin: 4px 0; }
+  strong { color: #000000; }
+  ul, ol { margin: 4px 0 4px 18px; padding: 0; }
+  li { margin-bottom: 2px; }
+  code {
+    background: #f0f4f8;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+  }
+  blockquote {
+    border-left: 3px solid #2a5f8f;
+    margin: 6px 0;
+    padding: 6px 14px;
+    background: #f8fafc;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 6px 0;
+    font-size: 10.5pt;
+  }
+  th, td {
+    border: 1px solid #999;
+    padding: 4px 6px;
+    text-align: left;
+  }
+  th {
+    background: #2a5f8f;
+    color: white;
+  }
+  tr:nth-child(even) { background: #f8fafc; }
+  hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+  }
+  .cover {
+    text-align: center;
+    padding-top: 60px;
+    page-break-after: always;
+  }
+  .cover h1 {
+    font-size: 32pt;
+    border: none;
+    color: #000000;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 16pt;
+    color: #333333;
+    margin-top: 6px;
+  }
+  .cover .meta {
+    font-size: 11pt;
+    color: #555555;
+    margin-top: 30px;
+  }
+  img {
+    max-width: 50%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 4px 0;
+    display: block;
+  }
+  .figure {
+    text-align: center;
+    margin: 8px 0;
+    page-break-inside: avoid;
+  }
+  .figure img {
+    margin: 0 auto 4px auto;
+    max-width: 50%;
+  }
+  .figure-caption {
+    font-size: 9pt;
+    color: #333333;
+    font-style: italic;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;background:#1a3c5e;color:white;padding:10px 20px;text-align:center;z-index:999;font-family:Arial,sans-serif;font-size:14px;">StudyForge &mdash; <a href="study_guide.pdf" download style="color:white;text-decoration:underline;font-weight:bold;">PDF</a> &middot; <a href="study_guide.mp4" download style="color:white;text-decoration:underline;">Video</a> &middot; <a href="quiz.html" style="color:white;text-decoration:underline;">Interactive Quiz</a> &middot; <a href="cheat_sheet.pdf" style="color:white;text-decoration:underline;">Cheat Sheet</a> &middot; <a href="exam_simulator.html" style="color:white;text-decoration:underline;">Exam Simulator</a></div>
+<div class="cover">
+  <h1>StudyForge</h1>
+  <div class="subtitle"></div>
+  <div class="subtitle">CS3 Hardware</div>
+  <div class="meta">Pages </div>
+  <div class="meta">Comprehensive Exam Preparation Guide</div>
+</div>
+<h1>CS3 Hardware — Cambridge IGCSE Computer Science Study Guide</h1>
+
+<h2>3.1 The Role of the CPU</h2>
+
+<p>The <strong>central processing unit (CPU)</strong> is one of the fundamental parts of a computer. It is where all the data and instructions are processed. The CPU acts like the brain of the computer system.</p>
+
+<p>All computers have a form of CPU. In personal computers (PCs) and laptops, it is a separate component. In household devices such as washing machines, traffic lights, and digital alarm clocks, a similar but smaller component called a <strong>microprocessor</strong> is used. A microprocessor performs a similar role to a CPU but on a smaller scale, processing a much more limited set of instructions.</p>
+
+<p>A microprocessor is often built into a system designed to perform a very specific task. This type of system is called an <strong>embedded system</strong>. Examples include traffic lights, washing machines, and digital alarm clocks.</p>
+
+<p>When an instruction is processed by a computer, the method used is called the <strong>fetch-decode-execute cycle</strong>. The CPU operates using the <strong>Von Neumann architecture</strong>, which is one of the most common types of modern computer architecture.</p>
+
+<h3>The Fetch-Decode-Execute Cycle</h3>
+
+<p>The cycle has three stages that repeat continuously:</p>
+
+<ol>
+  <li><strong>Fetch</strong> — The next instruction is fetched from RAM into the CPU</li>
+  <li><strong>Decode</strong> — The instruction is decoded (interpreted) within the CPU by the control unit</li>
+  <li><strong>Execute</strong> — The instruction is executed (carried out) by the CPU</li>
+</ol>
+
+<h2>3.2 The Fetch Stage</h2>
+
+<p>Data and instructions are given to the computer through input devices and stored in <strong>RAM (random access memory)</strong>. When they need to be processed, they must be brought from RAM into the CPU.</p>
+
+<p>The fetch stage involves the following steps:</p>
+
+<ol>
+  <li>The <strong>program counter (PC)</strong> stores the address of the next instruction to be processed. This address is a location within RAM.</li>
+  <li>The address stored in the PC is sent to the <strong>memory address register (MAR)</strong> via the <strong>address bus</strong>.</li>
+  <li>The MAR sends the address to RAM using the address bus to locate the instruction.</li>
+  <li>The data stored at that RAM location (the instruction) is sent to the <strong>memory data register (MDR)</strong> via the <strong>data bus</strong>.</li>
+  <li>The MDR sends the instruction to the <strong>current instruction register (CIR)</strong> using the data bus.</li>
+  <li>The CIR is part of the <strong>control unit (CU)</strong>, which is responsible for the next stage — the decode stage.</li>
+</ol>
+
+<h2>3.3 The Decode Stage</h2>
+
+<p>The decode stage begins when the instruction is received by the <strong>control unit (CU)</strong>. The CU decodes the instruction so that the CPU can understand what is required to execute it.</p>
+
+<p>To decode an instruction, the CU uses an <strong>instruction set</strong> — a set of all the commands that are understood and can be processed by the CPU. These commands are in machine code. Once the instruction is decoded using the instruction set, it can be executed.</p>
+
+<h2>3.4 The Execute Stage</h2>
+
+<p>The execute stage is when the actions required for the instruction are carried out. This is likely to involve mathematical and logical calculations.</p>
+
+<ul>
+  <li>If calculations are required, the data is sent to the <strong>arithmetic logic unit (ALU)</strong>, the component within the CPU responsible for all calculations.</li>
+  <li>The ALU has a special register called the <strong>accumulator (ACC)</strong> that stores interim values created during calculations.</li>
+  <li>Once calculations are complete, the actions for the instruction are performed (e.g. a file is opened or a letter is displayed).</li>
+</ul>
+
+<p>The CU acts as a conductor, sending signals via the <strong>control bus</strong> to all components within the CPU to coordinate their roles in the fetch-decode-execute cycle.</p>
+
+<h2>3.5 Factors That Affect CPU Performance</h2>
+
+<p>The performance of a CPU refers to how quickly it can process instructions. The more instructions processed per second, the higher the performance. There are <strong>three main factors</strong> that affect CPU performance:</p>
+
+<h3>Number of Cores</h3>
+
+<ul>
+  <li>A single <strong>core</strong> contains all the components needed to perform the fetch-decode-execute cycle.</li>
+  <li>A single-core CPU can perform one fetch-decode-execute cycle at a time.</li>
+  <li>A <strong>dual-core</strong> processor has two cores and can perform two cycles simultaneously.</li>
+  <li>A <strong>quad-core</strong> processor has four cores and can perform four cycles simultaneously.</li>
+  <li>More cores allow a computer to <strong>multitask</strong> — processing more than one instruction at a time.</li>
+  <li>However, adding more cores does not always proportionally increase performance.</li>
+</ul>
+
+<h3>Clock Speed</h3>
+
+<ul>
+  <li>The CPU contains an internal clock that controls the speed at which instructions are processed.</li>
+  <li>Clock speed is measured in <strong>hertz (Hz)</strong>. A CPU with a clock speed of 1 Hz can process one instruction per second.</li>
+  <li>Modern computers have clock speeds measured in <strong>gigahertz (GHz)</strong>. A 2 GHz CPU can process 2 billion instructions per second.</li>
+  <li>If a computer has two cores, each core can process 2 billion instructions per second.</li>
+  <li>It is possible to change the speed of a CPU using <strong>overclocking</strong>.</li>
+</ul>
+
+<h3>Cache Size</h3>
+
+<ul>
+  <li>The <strong>cache</strong> is a type of data storage within the CPU.</li>
+  <li>Instructions and data that the computer uses most frequently can be stored in the cache.</li>
+  <li>Accessing data from the cache is quicker than fetching from RAM.</li>
+  <li>A larger cache means more frequently used data can be stored, reducing the need to access RAM and improving performance.</li>
+  <li>However, if the cache is too large, it can take longer to search through it, potentially having a negative effect on performance.</li>
+</ul>
+
+<h2>3.6 Input and Output Devices</h2>
+
+<h3>Input Devices</h3>
+
+<p>An <strong>input device</strong> is any device that allows data to be entered into a computer system. This data could take many forms including text, images, and sound.</p>
+
+<p>Common examples of input devices:</p>
+
+<ul>
+  <li><strong>Barcode scanner</strong> — Scans barcodes to read the data stored within them (e.g. supermarket pricing)</li>
+  <li><strong>Digital camera</strong> — Captures images and video as digital data</li>
+  <li><strong>Keyboard</strong> — Allows text and commands to be entered as character data</li>
+  <li><strong>Microphone</strong> — Captures sound as audio data</li>
+  <li><strong>Optical mouse</strong> — Detects movement and button clicks for cursor control</li>
+  <li><strong>QR code scanner</strong> — Reads QR codes to obtain embedded data</li>
+  <li><strong>Scanner (2D and 3D)</strong> — Captures printed documents or physical objects as digital data</li>
+  <li><strong>Touch screen</strong> — Allows direct interaction through screen contact; three types: resistive, capacitive, and infra-red</li>
+</ul>
+
+<h3>Output Devices</h3>
+
+<p>An <strong>output device</strong> is any device that allows the result of data processing to be seen or heard.</p>
+
+<p>Common examples of output devices:</p>
+
+<ul>
+  <li><strong>Actuator</strong> — Outputs an action, often movement, to control another device (e.g. turning a light on/off in an automated system)</li>
+  <li><strong>Digital light processing (DLP) projector</strong> — Projects images onto a surface using light</li>
+  <li><strong>Inkjet printer</strong> — Produces printed output by spraying ink onto paper</li>
+  <li><strong>Laser printer</strong> — Produces printed output using laser and toner technology</li>
+  <li><strong>Light emitting diode (LED) screen</strong> — Displays visual output using LED technology</li>
+  <li><strong>Liquid crystal display (LCD) projector</strong> — Projects images using LCD technology</li>
+  <li><strong>Liquid crystal display (LCD) screen</strong> — Displays visual output using LCD technology</li>
+  <li><strong>Speaker</strong> — Produces audio output</li>
+  <li><strong>3D printer</strong> — Creates three-dimensional physical objects from digital designs</li>
+</ul>
+
+<h2>3.7 Sensors</h2>
+
+<p>A <strong>sensor</strong> is a type of input device used in an <strong>automated system</strong> to capture different types of data from the surrounding environment. Sensors capture analogue data that can be processed and analysed by a computer system. They are normally set to capture data at given time intervals.</p>
+
+<h3>Types of Sensors</h3>
+
+<table>
+  <tr>
+    <th>Sensor Type</th>
+    <th>Data Captured</th>
+    <th>Example Use</th>
+  </tr>
+  <tr>
+    <td>Acoustic</td>
+    <td>Level of sound in an environment</td>
+    <td>Security systems — detecting broken windows</td>
+  </tr>
+  <tr>
+    <td>Accelerometer</td>
+    <td>Acceleration forces (static and dynamic)</td>
+    <td>Mobile phones (screen rotation), cars (airbag deployment), earthquake monitoring</td>
+  </tr>
+  <tr>
+    <td>Flow</td>
+    <td>Amount of liquid, gas, or steam flowing through an environment</td>
+    <td>Factories and nuclear power plants — monitoring pipe flow</td>
+  </tr>
+  <tr>
+    <td>Gas</td>
+    <td>Presence and concentration of a gas</td>
+    <td>Carbon monoxide detection in homes</td>
+  </tr>
+  <tr>
+    <td>Humidity</td>
+    <td>Level of moisture in the atmosphere</td>
+    <td>Greenhouses (agriculture), art galleries</td>
+  </tr>
+  <tr>
+    <td>Infra-red</td>
+    <td>Infra-red radiation from objects and people</td>
+    <td>Security systems — intruder detection</td>
+  </tr>
+  <tr>
+    <td>Level</td>
+    <td>Whether a substance is at a certain level or amount</td>
+    <td>Cars — monitoring oil and fuel levels</td>
+  </tr>
+  <tr>
+    <td>Light</td>
+    <td>Ambient light levels or direct light beams</td>
+    <td>Automatic streetlights — turning on when dark</td>
+  </tr>
+  <tr>
+    <td>Magnetic field</td>
+    <td>Presence of magnetic fields from objects</td>
+    <td>Car parks — counting vehicles</td>
+  </tr>
+  <tr>
+    <td>Moisture</td>
+    <td>Amount of water in a substance such as soil</td>
+    <td>Farming — monitoring soil water content</td>
+  </tr>
+  <tr>
+    <td>pH</td>
+    <td>The pH level of a substance</td>
+    <td>Environmental agencies — monitoring water pollution</td>
+  </tr>
+  <tr>
+    <td>Pressure</td>
+    <td>Force of pressure applied to a sensor</td>
+    <td>Security — detecting opened windows or doors</td>
+  </tr>
+  <tr>
+    <td>Proximity</td>
+    <td>How close an object is to the sensor</td>
+    <td>Manufacturing robots — obstacle avoidance</td>
+  </tr>
+  <tr>
+    <td>Temperature</td>
+    <td>Temperature of an object or surrounding environment</td>
+    <td>Air conditioning systems — maintaining room temperature</td>
+  </tr>
+</table>
+
+<h2>3.8 Data Storage — Primary Storage</h2>
+
+<p>Data in a computer system needs to be stored either temporarily (while being processed) or permanently (for future use). There are two main categories: <strong>primary storage</strong> and <strong>secondary storage</strong>.</p>
+
+<p><strong>Primary storage</strong> is directly accessed by the CPU. There are two main types: <strong>RAM</strong> and <strong>ROM</strong>.</p>
+
+<h3>RAM (Random Access Memory)</h3>
+
+<ul>
+  <li><strong>Volatile</strong> storage — contents are lost when power is turned off (also called temporary storage)</li>
+  <li>Stores data and programs that are currently in use by the computer</li>
+  <li>Contents are constantly being changed as data is processed by the CPU</li>
+  <li>It is possible to increase the amount of RAM by adding further RAM components</li>
+</ul>
+
+<h3>ROM (Read Only Memory)</h3>
+
+<ul>
+  <li><strong>Non-volatile</strong> storage — contents are retained even when power is removed (also called permanent storage)</li>
+  <li>Stores programs that initially boot the computer, such as the bootstrap and the BIOS</li>
+  <li>Contents are fixed and do not normally change; reprogramming is possible but complex and rarely attempted</li>
+  <li>It is not easy to alter the amount of ROM available in a computer system</li>
+</ul>
+
+<h2>3.9 Data Storage — Secondary Storage</h2>
+
+<p><strong>Secondary storage</strong> is a category of storage that is not directly accessed by the CPU. Data and instructions must be sent from secondary storage into primary storage to be processed. Secondary storage is <strong>non-volatile</strong>. There are three main types:</p>
+
+<h3>Magnetic Storage</h3>
+
+<ul>
+  <li>Relies on the properties of magnetism to store data</li>
+  <li>Uses circular plates called <strong>platters</strong> that spin to allow data to be read and written</li>
+  <li>Platters are separated into <strong>tracks</strong> and <strong>sectors</strong></li>
+  <li>A <strong>read/write head</strong> moves across the platters to read or write data</li>
+  <li>Uses an electromagnet to magnetise dots on each platter: magnetised = binary 1, demagnetised = binary 0</li>
+  <li>Each platter has billions of magnetised dots</li>
+  <li>Example: <strong>hard disk drive (HDD)</strong></li>
+</ul>
+
+<h3>Optical Storage</h3>
+
+<ul>
+  <li>Uses <strong>lasers</strong> to read and write data to and from a circular disk</li>
+  <li>The disk spins and a read/write head moves across the surface</li>
+  <li>To write data, a laser burns <strong>pits</strong> into the surface of the disk</li>
+  <li>The surface between each pit is called a <strong>land</strong></li>
+  <li>Pits are organised in a <strong>spiral track</strong> starting from the centre of the disk</li>
+  <li>A laser reads the pits and lands to obtain the stored data</li>
+  <li>Examples: <strong>CD</strong>, <strong>DVD</strong>, <strong>Blu-ray</strong></li>
+  <li>Mostly used today to archive data or physically distribute files</li>
+</ul>
+
+<h3>Solid-State Storage</h3>
+
+<ul>
+  <li>Has <strong>no moving parts</strong>, making it more durable than magnetic or optical storage</li>
+  <li>Created using <strong>semiconductor chips</strong>; sometimes known as <strong>flash memory</strong></li>
+  <li>Contains <strong>cells</strong> and <strong>transistors</strong> laid out in a grid</li>
+  <li>Transistors can be wired in two ways: <strong>NOR flash</strong> (parallel) and <strong>NAND flash</strong> (series)</li>
+  <li>Each transistor intersection has a <strong>control gate</strong> and a <strong>floating gate</strong></li>
+  <li>When first created, all transistors are set to binary 1; storing data converts them to binary 0</li>
+  <li>Examples: <strong>solid state drive (SSD)</strong>, <strong>USB flash memory drive</strong> (USB stick, memory stick, thumb drive)</li>
+</ul>
+
+<h2>3.10 Virtual Memory</h2>
+
+<p><strong>Virtual memory</strong> is a type of memory created for temporary use as an extension to RAM. It is created by partitioning a section of a hard drive component to act as extra RAM.</p>
+
+<h3>How Virtual Memory Works</h3>
+
+<ol>
+  <li>When RAM becomes full, the computer transfers data that is not immediately required to the virtual memory on the hard drive</li>
+  <li>Data is transferred in structures called <strong>pages</strong></li>
+  <li>Pages of data are held in virtual memory until they are needed again</li>
+  <li>When the pages are required, they are sent back to RAM for processing</li>
+  <li>This process frees up room in RAM for immediate data that is being processed</li>
+</ol>
+
+<p>If the RAM became full and the computer did not have virtual memory, it could crash as it may not be able to complete the current task.</p>
+
+<h2>3.11 Cloud Storage</h2>
+
+<p><strong>Cloud storage</strong> is when data is stored remotely on servers that are owned and maintained by a third party, and accessed using the internet. When data is stored within buildings and hardware owned by the individual or business, this is known as storing data <strong>locally</strong>. When data is stored in hardware owned by a third party and accessed using the internet, this is known as storing data <strong>remotely</strong>.</p>
+
+<p>Cloud storage companies set up very large buildings housing thousands of computer servers, maintained 24 hours a day. Companies pay a fee to store their data on these servers.</p>
+
+<h3>Cloud Storage vs Local Storage</h3>
+
+<table>
+  <tr>
+    <th>Aspect</th>
+    <th>Cloud Storage</th>
+    <th>Local Storage</th>
+  </tr>
+  <tr>
+    <td>Cost</td>
+    <td>No need to pay for hardware to store data</td>
+    <td>Must purchase hardware; costs can be high for large amounts of data</td>
+  </tr>
+  <tr>
+    <td>Security</td>
+    <td>Third party responsible; risk if they fail to protect data properly</td>
+    <td>You control security; can regularly check and maintain storage</td>
+  </tr>
+  <tr>
+    <td>Accessibility</td>
+    <td>Access from anywhere with internet; relies on internet connection quality</td>
+    <td>Available at all times without internet; local access only</td>
+  </tr>
+  <tr>
+    <td>Scalability</td>
+    <td>Can increase or decrease storage space easily</td>
+    <td>May have redundant hardware that is paid for but not used</td>
+  </tr>
+</table>
+
+<h2>3.12 Network Hardware</h2>
+
+<p>When two or more devices are connected, this is called a <strong>network</strong>. Basic hardware devices required to create a network are a <strong>network interface card (NIC)</strong>, a <strong>router</strong>, and <strong>transmission media</strong>.</p>
+
+<h3>Network Interface Card (NIC)</h3>
+
+<ul>
+  <li>A piece of hardware within your computer or device</li>
+  <li>May be wired or wireless (most modern NICs are wireless — WNICs)</li>
+  <li>Each NIC is given a <strong>media access control (MAC) address</strong> to identify a device on a network</li>
+  <li>MAC address is assigned by the manufacturer and never normally changed</li>
+  <li>Made up of two parts: the manufacturer's ID code and the serial ID code for the device</li>
+  <li>Represented as hexadecimal with six pairs of numbers (e.g. 34:4D:EA:89:75:B2)</li>
+  <li>When data is transmitted, the MAC address is sent with the data to identify the source device</li>
+</ul>
+
+<h3>Router</h3>
+
+<ul>
+  <li>A hardware device that reads each <strong>data packet</strong> it receives</li>
+  <li>Reads data packets to find the destination of the data</li>
+  <li>Uses the MAC address for devices on the same local network</li>
+  <li>Uses the <strong>IP address</strong> to forward data to devices on the internet or different networks</li>
+  <li>Assigns IP addresses to devices connected to it</li>
+</ul>
+
+<h3>IP Addresses</h3>
+
+<p>An <strong>IP address</strong> is a unique address used to locate a device on a network. It is assigned by the network (usually the router), unlike a MAC address which is assigned by the manufacturer.</p>
+
+<p><strong>IPv4:</strong></p>
+<ul>
+  <li>Created in 1983, uses 32-bit addresses</li>
+  <li>Separated by full stops (e.g. 12.244.233.165)</li>
+  <li>Running out due to the increasing number of devices worldwide</li>
+</ul>
+
+<p><strong>IPv6:</strong></p>
+<ul>
+  <li>Created to provide more available addresses</li>
+  <li>Uses 128-bit addresses and can contain hexadecimal characters</li>
+  <li>Separated by colons (e.g. 2001:0db8:0000:0000:0000:ff00:0042:7879)</li>
+</ul>
+
+<p><strong>Static vs Dynamic IP Addresses:</strong></p>
+<ul>
+  <li><strong>Dynamic</strong> — Changes each time the device connects to a network; most devices use dynamic addresses</li>
+  <li><strong>Static</strong> — Remains the same every time the device connects; provided by the Internet Service Provider (ISP)</li>
+</ul>
+
+<hr>
+
+<h2>Important Terms</h2>
+
+<table>
+  <tr>
+    <th>Term</th>
+    <th>Definition</th>
+  </tr>
+  <tr>
+    <td>CPU (Central Processing Unit)</td>
+    <td>The component in a computer system that processes all instructions and data</td>
+  </tr>
+  <tr>
+    <td>Microprocessor</td>
+    <td>A smaller version of a CPU, designed to perform a limited set of instructions in embedded systems</td>
+  </tr>
+  <tr>
+    <td>Embedded system</td>
+    <td>A computer system built into a device to perform a specific task, such as a traffic light or washing machine</td>
+  </tr>
+  <tr>
+    <td>Fetch-decode-execute cycle</td>
+    <td>The continuous cycle the CPU uses to process instructions: fetching from RAM, decoding, and executing</td>
+  </tr>
+  <tr>
+    <td>Von Neumann architecture</td>
+    <td>A common computer architecture where data and instructions are stored in the same memory and processed sequentially</td>
+  </tr>
+  <tr>
+    <td>Program counter (PC)</td>
+    <td>A register that stores the address in RAM of the next instruction to be processed</td>
+  </tr>
+  <tr>
+    <td>Memory address register (MAR)</td>
+    <td>A register that stores the address of the memory location to be accessed</td>
+  </tr>
+  <tr>
+    <td>Memory data register (MDR)</td>
+    <td>A register that stores the data that has been fetched from or is to be written to memory</td>
+  </tr>
+  <tr>
+    <td>Current instruction register (CIR)</td>
+    <td>A register that stores the instruction currently being decoded or executed</td>
+  </tr>
+  <tr>
+    <td>Control unit (CU)</td>
+    <td>The component of the CPU that directs the operation of the processor and decodes instructions</td>
+  </tr>
+  <tr>
+    <td>Arithmetic logic unit (ALU)</td>
+    <td>The component of the CPU that performs all mathematical and logical calculations</td>
+  </tr>
+  <tr>
+    <td>Accumulator (ACC)</td>
+    <td>A special register in the ALU that stores interim values during calculations</td>
+  </tr>
+  <tr>
+    <td>Instruction set</td>
+    <td>The complete set of machine code commands that a CPU can understand and process</td>
+  </tr>
+  <tr>
+    <td>Address bus</td>
+    <td>A bus used to carry memory addresses between the CPU and RAM</td>
+  </tr>
+  <tr>
+    <td>Data bus</td>
+    <td>A bus used to carry data between the CPU and RAM</td>
+  </tr>
+  <tr>
+    <td>Control bus</td>
+    <td>A bus used by the CU to send signals to all components within the CPU to coordinate their operations</td>
+  </tr>
+  <tr>
+    <td>Core</td>
+    <td>A single processing unit within a CPU containing all components needed for the fetch-decode-execute cycle</td>
+  </tr>
+  <tr>
+    <td>Clock speed</td>
+    <td>The speed at which a CPU processes instructions, measured in hertz (Hz) or gigahertz (GHz)</td>
+  </tr>
+  <tr>
+    <td>Cache</td>
+    <td>A small, fast data storage area within the CPU that stores frequently used instructions and data</td>
+  </tr>
+  <tr>
+    <td>Input device</td>
+    <td>Any device that allows data to be entered into a computer system</td>
+  </tr>
+  <tr>
+    <td>Output device</td>
+    <td>Any device that allows the result of data processing to be seen or heard</td>
+  </tr>
+  <tr>
+    <td>Sensor</td>
+    <td>A type of input device used to capture analogue data from the surrounding environment</td>
+  </tr>
+  <tr>
+    <td>RAM (Random Access Memory)</td>
+    <td>Volatile primary storage that stores data and programs currently in use; contents lost when power is off</td>
+  </tr>
+  <tr>
+    <td>ROM (Read Only Memory)</td>
+    <td>Non-volatile primary storage that stores boot-up programs like the BIOS; contents retained without power</td>
+  </tr>
+  <tr>
+    <td>Primary storage</td>
+    <td>Storage that is directly accessed by the CPU, consisting of RAM and ROM</td>
+  </tr>
+  <tr>
+    <td>Secondary storage</td>
+    <td>Non-volatile storage not directly accessed by the CPU; includes magnetic, optical, and solid-state types</td>
+  </tr>
+  <tr>
+    <td>Magnetic storage</td>
+    <td>Storage that uses magnetism and spinning platters to store data (e.g. hard disk drive)</td>
+  </tr>
+  <tr>
+    <td>Optical storage</td>
+    <td>Storage that uses lasers to read and write data on circular disks (e.g. CD, DVD, Blu-ray)</td>
+  </tr>
+  <tr>
+    <td>Solid-state storage</td>
+    <td>Storage with no moving parts, using semiconductor chips and flash memory (e.g. SSD, USB flash drive)</td>
+  </tr>
+  <tr>
+    <td>Virtual memory</td>
+    <td>A section of the hard drive partitioned to act as extra RAM when physical RAM becomes full</td>
+  </tr>
+  <tr>
+    <td>Cloud storage</td>
+    <td>Storing data remotely on third-party servers accessed via the internet</td>
+  </tr>
+  <tr>
+    <td>Network</td>
+    <td>Two or more devices connected together to share data and resources</td>
+  </tr>
+  <tr>
+    <td>Network interface card (NIC)</td>
+    <td>Hardware in a device that allows it to connect to a network, either wired or wireless</td>
+  </tr>
+  <tr>
+    <td>MAC address</td>
+    <td>A unique hexadecimal address assigned by the manufacturer to identify a device on a network</td>
+  </tr>
+  <tr>
+    <td>Router</td>
+    <td>A hardware device that reads data packets and forwards them to their correct destination on a network</td>
+  </tr>
+  <tr>
+    <td>IP address</td>
+    <td>A unique address assigned by the network to identify and locate a device</td>
+  </tr>
+  <tr>
+    <td>IPv4</td>
+    <td>An IP addressing system using 32-bit addresses separated by full stops</td>
+  </tr>
+  <tr>
+    <td>IPv6</td>
+    <td>An IP addressing system using 128-bit addresses separated by colons, created to replace IPv4</td>
+  </tr>
+  <tr>
+    <td>Static IP address</td>
+    <td>An IP address that remains the same each time a device connects to a network</td>
+  </tr>
+  <tr>
+    <td>Dynamic IP address</td>
+    <td>An IP address that can change each time a device connects to a network</td>
+  </tr>
+  <tr>
+    <td>Volatile storage</td>
+    <td>Storage that loses its contents when power is removed (e.g. RAM)</td>
+  </tr>
+  <tr>
+    <td>Non-volatile storage</td>
+    <td>Storage that retains its contents even when power is removed (e.g. ROM, secondary storage)</td>
+  </tr>
+  <tr>
+    <td>Data packet</td>
+    <td>A unit of data transmitted across a network, containing the destination address</td>
+  </tr>
+  <tr>
+    <td>Transmission media</td>
+    <td>The physical means by which data is transmitted across a network (cables or wireless signals)</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>Practice Questions</h2>
+
+<h3>Question CS3.01</h3>
+<p>Where is data stored before it is fetched into the CPU?</p>
+
+<p><strong>Answer:</strong> Data is stored in RAM (random access memory) before it is fetched into the CPU.</p>
+
+<h3>Question CS3.02</h3>
+<p>Which component in the CPU is responsible for making sure the fetch-decode-execute cycle is performed correctly?</p>
+
+<p><strong>Answer:</strong> The control unit (CU) is responsible for coordinating the fetch-decode-execute cycle by sending signals via the control bus to all components within the CPU.</p>
+
+<h3>Question CS3.03</h3>
+<p>What is the role of a bus in a computer system?</p>
+
+<p><strong>Answer:</strong> A bus is a communication pathway that carries data, addresses, or control signals between components within the CPU and between the CPU and memory. The three main buses are the address bus, data bus, and control bus.</p>
+
+<h3>Question CS3.04</h3>
+<p>Why does the ALU need the accumulator (ACC)? What would happen without it?</p>
+
+<p><strong>Answer:</strong> The ALU needs the accumulator to store interim values that are created during calculations. Without it, the ALU would not be able to store partial results while performing multi-step calculations, and it would need to constantly access RAM, which would significantly slow down processing.</p>
+
+<h3>Question CS3.05</h3>
+<p>Describe the steps involved in the fetch stage of the fetch-decode-execute cycle.</p>
+
+<p><strong>Answer:</strong> (1) The program counter (PC) holds the address of the next instruction. (2) This address is copied to the memory address register (MAR) via the address bus. (3) The MAR sends the address to RAM using the address bus. (4) The instruction at that RAM location is sent to the memory data register (MDR) via the data bus. (5) The MDR forwards the instruction to the current instruction register (CIR). (6) The PC is incremented to point to the next instruction.</p>
+
+<h3>Question CS3.06</h3>
+<p>Which CPU can process more instructions at the same time: a quad core or a dual core?</p>
+
+<p><strong>Answer:</strong> A quad-core CPU can process more instructions at the same time because it has four cores, each capable of performing a separate fetch-decode-execute cycle simultaneously, compared to only two cores in a dual-core processor.</p>
+
+<h3>Question CS3.07</h3>
+<p>How many instructions per second can a dual-core 2.4 GHz CPU process?</p>
+
+<p><strong>Answer:</strong> A dual-core 2.4 GHz CPU can process 4.8 billion instructions per second (2.4 billion per core x 2 cores).</p>
+
+<h3>Question CS3.08</h3>
+<p>Explain why a larger cache can improve the performance of a CPU.</p>
+
+<p><strong>Answer:</strong> A larger cache can store more frequently used instructions and data within the CPU. This means the CPU does not need to fetch data from the slower RAM as often, reducing access times and improving overall processing speed.</p>
+
+<h3>Question CS3.09</h3>
+<p>Is a sensor an example of an input device or an output device? Explain your answer.</p>
+
+<p><strong>Answer:</strong> A sensor is an example of an input device because it captures data from the surrounding environment and sends it into the computer system for processing. It inputs analogue data such as temperature, light levels, or pressure readings.</p>
+
+<h3>Question CS3.10</h3>
+<p>Name five different types of sensor and give an application for each.</p>
+
+<p><strong>Answer:</strong> (1) Temperature sensor — used in air conditioning systems to maintain room temperature. (2) Light sensor — used in streetlights to automatically turn on when it gets dark. (3) Pressure sensor — used in security systems to detect opened windows or doors. (4) Humidity sensor — used in greenhouses to monitor moisture levels for optimal crop growth. (5) Infra-red sensor — used in security systems to detect intruders by capturing their infra-red radiation.</p>
+
+<h3>Question CS3.11</h3>
+<p>State two differences between RAM and ROM.</p>
+
+<p><strong>Answer:</strong> (1) RAM is volatile (loses contents when power is off) while ROM is non-volatile (retains contents without power). (2) RAM stores data and programs currently in use that constantly change, while ROM stores fixed boot-up programs like the BIOS that do not normally change.</p>
+
+<h3>Question CS3.12</h3>
+<p>Identify the three main types of secondary storage and give one example of each.</p>
+
+<p><strong>Answer:</strong> (1) Magnetic storage — e.g. hard disk drive (HDD). (2) Optical storage — e.g. CD, DVD, or Blu-ray. (3) Solid-state storage — e.g. solid state drive (SSD) or USB flash memory drive.</p>
+
+<h3>Question CS3.13</h3>
+<p>Describe how data is stored on optical storage.</p>
+
+<p><strong>Answer:</strong> Optical storage uses lasers to read and write data on a circular disk. To write data, a laser burns pits into the surface of the disk. The surface between each pit is called a land. These pits and lands are organised in a spiral track starting from the centre of the disk. A laser reads the pattern of pits and lands to retrieve the stored data. The disk spins and a read/write head moves across the surface.</p>
+
+<h3>Question CS3.14</h3>
+<p>Explain how virtual memory works and why it is needed.</p>
+
+<p><strong>Answer:</strong> Virtual memory is created by partitioning a section of the hard drive to act as extra RAM. When RAM becomes full, the computer transfers pages of data that are not immediately needed to the virtual memory. When these pages are required again, they are sent back to RAM for processing. Virtual memory is needed because without it, if RAM became full, the computer could crash as it would be unable to complete the tasks it is working on.</p>
+
+<h3>Question CS3.15</h3>
+<p>Give one advantage and two disadvantages of storing data in cloud storage rather than local storage.</p>
+
+<p><strong>Answer:</strong> Advantage: You do not have to pay for the hardware to store the data, reducing costs for businesses. Disadvantages: (1) You are relying on a third party to keep your data safe, and if they fail to do this, your data may be at risk. (2) You need an internet connection to access your data; if the connection fails or is slow, you will not be able to access your data.</p>
+
+<h3>Question CS3.16</h3>
+<p>Identify the name of the component where an instruction is stored immediately before it is fetched into the CPU.</p>
+
+<p><strong>Answer:</strong> The instruction is stored in RAM (random access memory) immediately before it is fetched into the CPU.</p>
+
+<h3>Question CS3.17</h3>
+<p>Identify the name of the component that stores the address of the next instruction that will be processed.</p>
+
+<p><strong>Answer:</strong> The program counter (PC) stores the address of the next instruction that will be processed.</p>
+
+<h3>Question CS3.18</h3>
+<p>Describe what happens at the decode stage of the fetch-decode-execute cycle.</p>
+
+<p><strong>Answer:</strong> During the decode stage, the control unit (CU) receives the instruction from the current instruction register (CIR). The CU then decodes the instruction using the instruction set — a set of all the machine code commands that the CPU can understand. This determines what actions need to be performed to execute the instruction. Once decoded, the instruction is ready to be executed.</p>
+
+<h3>Question CS3.19</h3>
+<p>A student replaces a 2 GHz single-core processor with a 3.4 GHz dual-core processor. Explain why the performance of the new CPU would be better.</p>
+
+<p><strong>Answer:</strong> The new CPU has a higher clock speed (3.4 GHz vs 2 GHz), meaning each core can process more instructions per second. Additionally, the new CPU has two cores instead of one, so it can perform two fetch-decode-execute cycles simultaneously. This means it can multitask and process more instructions overall, significantly improving performance.</p>
+
+<h3>Question CS3.20</h3>
+<p>What is the difference between a MAC address and an IP address?</p>
+
+<p><strong>Answer:</strong> A MAC address is assigned by the manufacturer of the network interface card and is permanent — it never normally changes. An IP address is assigned by the network (usually the router) and can change. MAC addresses are used to identify devices on a local network, while IP addresses are used to identify and locate devices across networks and the internet. MAC addresses are represented in hexadecimal (e.g. 34:4D:EA:89:75:B2) while IP addresses use decimal (IPv4) or hexadecimal (IPv6) notation.</p>
+
+<h3>Question CS3.21</h3>
+<p>Describe the structure of an IPv4 address and explain why IPv6 was created.</p>
+
+<p><strong>Answer:</strong> An IPv4 address uses 32 bits to create a numerical address separated by full stops (e.g. 12.244.233.165). IPv6 was created because as more and more devices started connecting to networks, the number of available IPv4 addresses was rapidly declining. Since each IP address must be unique, IPv6 uses 128 bits and can contain hexadecimal characters, creating vastly more possible addresses to accommodate the growing number of devices worldwide.</p>
+
+<h3>Question CS3.22</h3>
+<p>Give the most appropriate sensor for each scenario: (a) monitoring pollution in a river, (b) counting competitors finishing a race, (c) detecting a person approaching an automatic door.</p>
+
+<p><strong>Answer:</strong> (a) A pH sensor — to measure the pH level of the water and detect pollution. (b) A pressure sensor or infra-red sensor — to detect when a competitor crosses the finish line. (c) A proximity sensor or infra-red sensor — to detect when a person is approaching the door and trigger it to open.</p>
+
+<h3>Question CS3.23</h3>
+<p>Explain the difference between primary storage and secondary storage.</p>
+
+<p><strong>Answer:</strong> Primary storage is directly accessed by the CPU and includes RAM (volatile) and ROM (non-volatile). Secondary storage is not directly accessed by the CPU — data must be transferred to primary storage first before it can be processed. Secondary storage is always non-volatile and includes magnetic, optical, and solid-state storage types. Primary storage is generally faster but smaller in capacity, while secondary storage is slower but offers larger storage capacity.</p>
+
+<h3>Question CS3.24</h3>
+<p>Describe how data is stored on a hard disk drive (magnetic storage).</p>
+
+<p><strong>Answer:</strong> A hard disk drive uses circular plates called platters that spin. The platters are separated into tracks and sectors. A read/write head moves across the platters to read or write data. An electromagnet magnetises dots on each platter to store data — if a dot is magnetised it stores binary value 1, and if it is demagnetised it stores binary value 0. Each platter has billions of these magnetised dots.</p>
+
+<h3>Question CS3.25</h3>
+<p>Explain why solid-state storage was developed and how it differs from magnetic storage.</p>
+
+<p><strong>Answer:</strong> Solid-state storage was developed because hard disk drives have moving parts, making them vulnerable to wear and damage if dropped — a significant disadvantage for portable devices. Solid-state storage has no moving parts, making it more durable and reliable. It uses semiconductor chips and flash memory with cells and transistors arranged in a grid, whereas magnetic storage uses spinning platters and electromagnetic read/write heads. Solid-state storage is generally faster and more resistant to physical damage than magnetic storage.</p>
+
+<hr>
+
+<h2>Key Formulas and Concepts</h2>
+
+<ol>
+  <li>Clock speed is measured in hertz (Hz); 1 GHz = 1 billion instructions per second per core</li>
+  <li>Total processing power = clock speed x number of cores (e.g. dual-core 2.4 GHz = 4.8 billion instructions per second)</li>
+  <li>IPv4 uses 32-bit addresses (approximately 4.3 billion unique addresses); IPv6 uses 128-bit addresses (approximately 340 undecillion unique addresses)</li>
+  <li>The three buses in a CPU: address bus (carries memory addresses), data bus (carries data), control bus (carries control signals)</li>
+  <li>The fetch-decode-execute cycle sequence: PC → MAR → (address bus to RAM) → MDR → CIR → CU decodes → ALU executes</li>
+  <li>Volatile storage (RAM) loses data without power; non-volatile storage (ROM, secondary storage) retains data without power</li>
+  <li>Virtual memory extends RAM capacity by using a partitioned section of the hard drive</li>
+  <li>MAC address format: six pairs of hexadecimal digits (e.g. 34:4D:EA:89:75:B2) — 48 bits total</li>
+  <li>Three factors affecting CPU performance: number of cores, clock speed, cache size</li>
+  <li>Three types of secondary storage: magnetic (HDD), optical (CD/DVD/Blu-ray), solid-state (SSD/USB)</li>
+</ol>
+
+<hr>
+
+<h2>Exam Focus Priorities</h2>
+
+<ol>
+  <li>Be able to describe the complete fetch-decode-execute cycle, naming all registers (PC, MAR, MDR, CIR) and buses (address, data, control) involved at each stage</li>
+  <li>Know the roles of all CPU components: CU (decodes instructions, coordinates), ALU (performs calculations), ACC (stores interim values), and all registers</li>
+  <li>Understand the three factors that affect CPU performance (cores, clock speed, cache) and be able to explain how each one improves performance</li>
+  <li>Distinguish clearly between RAM (volatile, temporary, changeable) and ROM (non-volatile, permanent, fixed) and know what each stores</li>
+  <li>Be able to describe how each type of secondary storage works: magnetic (platters, tracks, sectors, read/write head), optical (laser, pits, lands, spiral track), solid-state (semiconductor chips, transistors, flash memory)</li>
+  <li>Know all sensor types from the syllabus and be able to match the correct sensor to a given scenario</li>
+  <li>Understand the difference between input devices and output devices, and know all examples from the syllabus</li>
+  <li>Be able to explain how virtual memory works, why it is needed, and the role of pages in the process</li>
+  <li>Know the advantages and disadvantages of cloud storage vs local storage</li>
+  <li>Understand network hardware: NIC, MAC address, router, IP address (IPv4 vs IPv6, static vs dynamic)</li>
+</ol>
+
+</body>
+</html>
